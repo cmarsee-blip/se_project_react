@@ -3,8 +3,8 @@
   width: 323px;
   display: flex;
   justify-content: center;
-  /* border:;
-  border-radius:; */
+  /* border:; */
+  border-radius: 16px;
 }
 
 .card__name {
@@ -20,5 +20,8 @@
 }
 
 .card__image {
+  max-width: 498px;
   width: 100%;
 }
+
+/* finish styling preview */

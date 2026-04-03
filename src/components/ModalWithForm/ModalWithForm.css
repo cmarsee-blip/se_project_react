@@ -8,6 +8,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  visibility: hidden;
+}
+
+.modal_opened {
+  visibility: visible;
 }
 
 .modal__title {
@@ -22,6 +27,10 @@
   position: absolute;
   top: 20px;
   right: 28px;
+}
+
+.modal__close-btn {
+  color: #fff;
 }
 
 .modal__content {
