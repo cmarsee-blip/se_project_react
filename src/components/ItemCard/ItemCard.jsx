@@ -1,6 +1,7 @@
 import "./ItemCard.css";
+import close from "../../assets/modalclose.png";
 
-function ItemCard({ item, onCardClick }) {
+function ItemCard({ item, onCardClick, onClose }) {
   const handleCardClick = () => {
     onCardClick(item);
   };
@@ -14,6 +15,9 @@ function ItemCard({ item, onCardClick }) {
         src={item.link}
         alt={item.name}
       />
+      <button onClick={onClose} type="button" className="modal__close">
+        <img className="modal__close-btn" src={close} />
+      </button>
     </li>
   );
 }

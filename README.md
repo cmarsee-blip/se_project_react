@@ -1,5 +1,15 @@
 # React + Vite
 
+Project Name: What To Wear
+
+Description:
+
+This project is built to help determine what type of clothes one should wear based on the current weather conditions in a set location.
+
+Technologies Used:
+
+OpenWeatherAPI, Dot (AI), React
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

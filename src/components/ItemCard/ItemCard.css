@@ -11,17 +11,20 @@
   position: absolute;
   top: 15px;
   margin: 0;
-  border-radius: 4px;
+  border-radius: 16px;
   background-color: #fff;
   height: 24px;
   font-size: 16px;
   color: #000 0.6;
   padding: 2x 12px;
+  line-height: 20px;
 }
 
 .card__image {
   max-width: 498px;
   width: 100%;
+  border: Mixed solid #0000004d;
+  border-radius: 16px;
 }
 
 /* finish styling preview */
