@@ -15,9 +15,9 @@ function ItemCard({ item, onCardClick, onClose }) {
         src={item.link}
         alt={item.name}
       />
-      <button onClick={onClose} type="button" className="modal__close">
+      {/* <button onClick={onClose} type="button" className="modal__close">
         <img className="modal__close-btn" src={close} />
-      </button>
+      </button> */}
     </li>
   );
 }
