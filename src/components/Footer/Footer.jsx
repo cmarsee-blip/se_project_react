@@ -1,10 +1,10 @@
 import "./Footer.css";
 
-function Footer() {
+function Footer({ children }) {
   return (
     <footer className="footer">
-      <h2 className="footer-author">Developed by Cody Marsee</h2>
-      <h2 className="footer-date">2026</h2>
+      <p className="footer-author">Developed by {children}</p>
+      <p className="footer__copyright">© 2026</p>
     </footer>
   );
 }

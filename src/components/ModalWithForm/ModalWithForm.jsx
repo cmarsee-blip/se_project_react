@@ -16,7 +16,7 @@ function ModalWithForm({ children, buttonText, title, name, isOpen, onClose }) {
           onClick={onClose}
           type="button"
           className="modal__close"
-          alt="close icon"
+          aria-label="close icon"
         >
           <img className="modal__close-btn" src={close} />
         </button>

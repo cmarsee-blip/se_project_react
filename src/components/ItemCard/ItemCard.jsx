@@ -1,5 +1,5 @@
 import "./ItemCard.css";
-import close from "../../assets/modalclose.png";
+// import close from "../../assets/modalclose.png";
 
 function ItemCard({ item, onCardClick, onClose }) {
   const handleCardClick = () => {
