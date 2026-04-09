@@ -11,11 +11,14 @@
 .header__date-and-location {
   margin: 0;
   font-size: 20px;
+  display: flex;
+  flex-grow: 1;
 }
 
 .header__add-clothes-btn {
   margin: 0 20px 0 auto;
   font-size: 20px;
+  border: none;
 }
 
 .header__user-container {
