@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Dashboard from "../Dashboard/Dashboard";
 
 import "./App.css";
 import {
@@ -37,6 +39,22 @@ function App() {
     setSelectedCard(card);
   };
 
+  const onAddItem = (inputValues) => {
+    // call the fetch function
+    // .then((data) => {}) all the stuff below
+
+    const newCardData = {
+      name: inputValues.name,
+      link: inputValues.link,
+      weather: inputValues.weatherType,
+    };
+    // Don't use newCardData
+    // THe ID will be included  in the response data
+    setClothingItems([...clothingItems, newCardData]);
+    closeActiveModal();
+    // .catch()
+  };
+
   const handleAddClick = () => {
     setActiveModal("add-garment");
   };
@@ -61,16 +79,25 @@ function App() {
       <div className="page">
         <div className="page__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-          <Main
-            clothingItems={clothingItems}
-            weatherData={weatherData}
-            handleCardClick={handleCardClick}
-          />
+          <Routes>
+            <Route path="/" element={<p>PROFILE</p>} />
+            <Route
+              path="/profile"
+              element={
+                <Main
+                  clothingItems={clothingItems}
+                  weatherData={weatherData}
+                  handleCardClick={handleCardClick}
+                />
+              }
+            />
+          </Routes>
           <Footer>Cody Marsee</Footer>
         </div>
         <AddItemModal
           isOpen={activeModal === "add-garment"}
           onClose={closeActiveModal}
+          onAddItem={onAddItem}
         ></AddItemModal>
         <ItemModal
           isOpen={activeModal === "preview"}
