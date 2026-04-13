@@ -30,4 +30,11 @@
 .header__username {
   margin: 0;
   font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.header__nav-link {
+  color: black;
+  text-decoration: none;
 }

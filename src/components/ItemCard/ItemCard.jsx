@@ -12,7 +12,7 @@ function ItemCard({ item, onCardClick, onClose }) {
       <img
         onClick={handleCardClick}
         className="card__image"
-        src={item.link}
+        src={item.imageUrl}
         alt={item.name}
       />
       {/* <button onClick={onClose} type="button" className="modal__close">
