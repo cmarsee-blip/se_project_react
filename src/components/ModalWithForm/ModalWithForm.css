@@ -52,6 +52,14 @@
   border-radius: 16px;
 }
 
+.modal__delete {
+  position: absolute;
+  right: 33px;
+  bottom: 74px;
+  color: #ff4d00;
+  border: none;
+}
+
 .modal__form {
   display: flex;
   flex-direction: column;

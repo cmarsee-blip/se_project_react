@@ -97,10 +97,10 @@
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sweatshirt.png?etag=008a9674757bea2e0bdb31242e364be0"
     },
     {
-      "_id": 16,
-      "name": "T-Shirt",
-      "weather": "hot",
-      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
+      "name": "Baseball Brotherhood",
+      "imageUrl": "https://www.aerotime.aero/images/2023/11/image-13.jpeg",
+      "weather": "warm",
+      "_id": 23
     }
   ]
 }

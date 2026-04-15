@@ -1,7 +1,7 @@
 import "./ItemCard.css";
 // import close from "../../assets/modalclose.png";
 
-function ItemCard({ item, onCardClick, onClose }) {
+function ItemCard({ item, onCardClick }) {
   const handleCardClick = () => {
     onCardClick(item);
   };

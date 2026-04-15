@@ -12,7 +12,7 @@ import Profile from "../Profile/Profile";
 import ItemModal from "../ItemModal/ItemModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
-import { getItems } from "../../utils/api";
+import { addItem, getItems, removeItem } from "../../utils/api";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -38,19 +38,32 @@ function App() {
   };
 
   const onAddItem = (inputValues) => {
-    // call the fetch function
-    // .then((data) => {}) all the stuff below
+    console.log(inputValues);
 
     const newCardData = {
       name: inputValues.name,
-      link: inputValues.link,
-      weather: inputValues.weatherType,
+      imageUrl: inputValues.imageUrl,
+      weather: inputValues.weather,
     };
-    // Don't use newCardData
-    // THe ID will be included  in the response data
-    setClothingItems([...clothingItems, newCardData]);
-    closeActiveModal();
-    // .catch()
+
+    addItem(newCardData)
+      .then((data) => {
+        setClothingItems([data, ...clothingItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
+  const handleCardDelete = (card) => {
+    let cardId = card.id || card._id;
+    removeItem(cardId)
+      .then(() => {
+        setClothingItems(
+          preview.filter((item) => item.id || item.id) !== cardId,
+        );
+        onClose("preview");
+      })
+      .catch(console.error);
   };
 
   const handleAddClick = () => {
@@ -71,10 +84,24 @@ function App() {
 
     getItems()
       .then((data) => {
+        // TODO - make new items appear first
+        // HINT - lookup how to reverse an array in JS
         setClothingItems(data);
       })
       .catch(console.error);
   }, []);
+
+  // TODO
+  // - Add a delete button to the preview modal
+  // - Declare a handler in App.jsx (deleteItemHandler)
+  // - Pass handler to preview modal
+  // - Inside preview modal, pass the ID as an argument to the handler (use pattern like handleClick in ItemCard.jsx)
+  // Inside the handler
+  // - call removeItem function, pass it the ID
+  // - in the .then() remove the item from the array
+  // - how? filter it
+  // - - const filteredArr = arr.filter((item) => {
+  //        return ItemModal._id != id; })
 
   return (
     <CurrentTemperatureUnitContext.Provider
@@ -115,6 +142,7 @@ function App() {
           isOpen={activeModal === "preview"}
           card={selectedCard}
           onClose={closeActiveModal}
+          handleCardDelete={handleCardDelete}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
