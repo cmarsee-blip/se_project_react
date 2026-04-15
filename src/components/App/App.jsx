@@ -13,6 +13,7 @@ import ItemModal from "../ItemModal/ItemModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import { addItem, getItems, removeItem } from "../../utils/api";
+import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -58,16 +59,20 @@ function App() {
     let cardId = card.id || card._id;
     removeItem(cardId)
       .then(() => {
-        setClothingItems(
-          preview.filter((item) => item.id || item.id) !== cardId,
+        setClothingItems((previous) =>
+          previous.filter((item) => item._id !== cardId),
         );
-        onClose("preview");
+        closeActiveModal();
       })
       .catch(console.error);
   };
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
+  };
+
+  const handleConfirmClick = () => {
+    setActiveModal("confirm");
   };
 
   const closeActiveModal = () => {
@@ -84,24 +89,10 @@ function App() {
 
     getItems()
       .then((data) => {
-        // TODO - make new items appear first
-        // HINT - lookup how to reverse an array in JS
         setClothingItems(data);
       })
       .catch(console.error);
   }, []);
-
-  // TODO
-  // - Add a delete button to the preview modal
-  // - Declare a handler in App.jsx (deleteItemHandler)
-  // - Pass handler to preview modal
-  // - Inside preview modal, pass the ID as an argument to the handler (use pattern like handleClick in ItemCard.jsx)
-  // Inside the handler
-  // - call removeItem function, pass it the ID
-  // - in the .then() remove the item from the array
-  // - how? filter it
-  // - - const filteredArr = arr.filter((item) => {
-  //        return ItemModal._id != id; })
 
   return (
     <CurrentTemperatureUnitContext.Provider
@@ -142,6 +133,11 @@ function App() {
           isOpen={activeModal === "preview"}
           card={selectedCard}
           onClose={closeActiveModal}
+          handleConfirmClick={handleConfirmClick}
+        />
+        <DeleteConfirmation
+          isOpen={activeModal === "confirm"}
+          card={selectedCard}
           handleCardDelete={handleCardDelete}
         />
       </div>

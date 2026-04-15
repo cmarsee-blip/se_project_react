@@ -3,7 +3,7 @@ import close from "../../assets/modalclose.png";
 
 function ModalWithForm({
   children,
-  buttonText,
+  buttonText = "Add Garment",
   title,
   name,
   isOpen,

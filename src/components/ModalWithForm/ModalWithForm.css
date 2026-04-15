@@ -16,23 +16,25 @@
 }
 
 .modal__title {
-  margin: 0;
-  font-size: 16px;
-  line-height: 20px;
+  position: absolute;
+  height: 20px;
+  top: 28px;
+  left: 28px;
 }
 
-/* finish styling the modal elements */
-
 .modal__caption {
+  margin-top: 20px;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0%;
+  font-weight: 700;
 }
 
 .modal__close {
   position: absolute;
   top: 20px;
   right: 28px;
+  background: transparent;
 }
 
 .modal__close-btn {
@@ -50,6 +52,34 @@
 
 .modal__content_type_image {
   border-radius: 16px;
+  width: 498px;
+  height: 610px;
+}
+
+.modal__content_confirm {
+  display: flex;
+  border-radius: 20px;
+  width: 670px;
+  height: 280px;
+}
+
+.modal__confirm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.modal__confirm_title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0%;
+  max-width: 367px;
+  max-height: 48px;
+  margin-top: 60px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 .modal__delete {
@@ -58,6 +88,26 @@
   bottom: 74px;
   color: #ff4d00;
   border: none;
+}
+
+.modal__delete_confirm {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: #ff4d00;
+  border: none;
+  background: transparent;
+  margin-top: 40px;
+}
+
+.modal__delete_cancel {
+  font-weight: 700;
+  font-size: 20px;
+  border: none;
+  background: transparent;
+  margin-top: 24px;
+  margin-bottom: 60px;
 }
 
 .modal__form {
@@ -69,18 +119,33 @@
   width: 100%;
 }
 
+.modal__legend {
+  margin-top: 24px;
+  font-weight: 700;
+}
+
 .modal__label {
   margin-top: 24px;
-  border-bottom: 1px solid black;
+}
+
+.modal__label_name {
+  margin-top: 72px;
+}
+
+.modal__label_image {
+  margin-top: 24px;
   margin-bottom: 24px;
 }
 
 .modal__label_type_radio {
+  margin-top: 12px;
   border: none;
 }
 
 .modal__input {
   display: block;
+  border-bottom: 1px solid black;
+  width: 440px;
 }
 
 .modal__radio-btns {
@@ -88,6 +153,8 @@
   flex-direction: column;
   border: none;
   padding: 0;
+  width: 195px;
+  height: 108px;
 }
 
 .modal__submit {
@@ -97,10 +164,17 @@
   color: #fff;
   font-size: 16px;
   line-height: 20px;
+  height: 36px;
+  width: 140px;
+  font-weight: 700;
+  letter-spacing: 0%;
+  margin-top: 32px;
 }
 
 .modal__weather {
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0%;
+  font-weight: 700;
+  margin-top: 12px;
 }

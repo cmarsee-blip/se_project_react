@@ -1,9 +1,9 @@
 import "./ItemModal.css";
 import close from "../../assets/modalclose.png";
 
-function ItemModal({ isOpen, onClose, card, handleCardDelete }) {
+function ItemModal({ isOpen, onClose, card, handleConfirmClick }) {
   const handleDeleteClick = () => {
-    handleCardDelete(card);
+    handleConfirmClick();
   };
 
   return (
