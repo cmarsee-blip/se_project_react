@@ -1,13 +1,18 @@
-import { useForm } from "../../hooks/useForm";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
   const defaultValues = { name: "", imageUrl: "", weather: "" };
-  const { values, handleChange } = useForm(defaultValues);
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation(defaultValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    // don't submit if form invalid
+    if (!isValid) return;
     onAddItem(values);
+    // reset form after successful submit
+    resetForm(defaultValues, {}, false);
   }
 
   return (
@@ -17,6 +22,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isSubmitDisabled={!isValid}
     >
       <label htmlFor="name" className="modal__label_name">
         Name{" "}
@@ -31,7 +37,12 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
           maxLength="30"
           value={values.name}
           onChange={handleChange}
+          aria-invalid={!!errors.name}
+          aria-describedby="name-error"
         />
+        <span className="modal__error" id="name-error">
+          {errors.name || ""}
+        </span>
       </label>
       <label htmlFor="imageUrl" className="modal__label_image">
         Image{" "}
@@ -44,7 +55,12 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
           required
           value={values.imageUrl}
           onChange={handleChange}
+          aria-invalid={!!errors.imageUrl}
+          aria-describedby="imageUrl-error"
         />
+        <span className="modal__error" id="imageUrl-error">
+          {errors.imageUrl || ""}
+        </span>
       </label>
       <fieldset className="modal__radio-btns">
         <legend className="modal__legend">Select the weather type:</legend>
@@ -56,6 +72,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
             className="modal__radio-input"
             value="hot"
             onChange={handleChange}
+            required
           />{" "}
           Hot
         </label>

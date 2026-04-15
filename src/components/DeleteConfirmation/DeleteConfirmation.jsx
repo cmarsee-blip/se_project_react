@@ -1,3 +1,4 @@
+import "./DeleteConfirmation.css";
 import close from "../../assets/modalclose.png";
 
 function DeleteConfirmation({ isOpen, onClose, card, handleCardDelete }) {
