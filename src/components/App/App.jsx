@@ -39,8 +39,6 @@ function App() {
   };
 
   const onAddItem = (inputValues) => {
-    console.log(inputValues);
-
     const newCardData = {
       name: inputValues.name,
       imageUrl: inputValues.imageUrl,
@@ -50,6 +48,7 @@ function App() {
     addItem(newCardData)
       .then((data) => {
         setClothingItems([data, ...clothingItems]);
+        // resetForm(defaultValues, {}, false);
         closeActiveModal();
       })
       .catch(console.error);
@@ -60,7 +59,7 @@ function App() {
     removeItem(cardId)
       .then(() => {
         setClothingItems((previous) =>
-          previous.filter((item) => item._id !== cardId),
+          previous.filter((item) => (item._id ?? item.id) !== cardId),
         );
         closeActiveModal();
       })
@@ -106,6 +105,7 @@ function App() {
               path="/profile"
               element={
                 <Profile
+                  onAddClick={handleAddClick}
                   onCardClick={handleCardClick}
                   clothingItems={clothingItems}
                 />
@@ -138,6 +138,7 @@ function App() {
         <DeleteConfirmation
           isOpen={activeModal === "confirm"}
           card={selectedCard}
+          onClose={closeActiveModal}
           handleCardDelete={handleCardDelete}
         />
       </div>

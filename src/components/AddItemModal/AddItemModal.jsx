@@ -11,8 +11,6 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
     // don't submit if form invalid
     if (!isValid) return;
     onAddItem(values);
-    // reset form after successful submit
-    resetForm(defaultValues, {}, false);
   }
 
   return (

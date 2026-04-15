@@ -6,7 +6,11 @@ export default function Profile({ clothingItems, onCardClick }) {
   return (
     <section className="profile">
       <SideBar />
-      <ClothesSection onCardClick={onCardClick} clothingItems={clothingItems} />
+      <ClothesSection
+        onCardClick={onCardClick}
+        clothingItems={clothingItems}
+        onAddClick={onAddClick}
+      />
     </section>
   );
 }
