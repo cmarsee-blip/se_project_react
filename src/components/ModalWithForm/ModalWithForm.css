@@ -35,6 +35,7 @@
   top: 20px;
   right: 28px;
   background: transparent;
+  border: none;
 }
 
 .modal__close-btn {
@@ -45,14 +46,15 @@
   background-color: #fff;
   position: relative;
   padding: 28px 28px 36px;
-  max-width: 496px;
+  max-width: 436px;
+  max-height: 496px;
   box-sizing: border-box;
   width: 100%;
 }
 
 .modal__content_type_image {
   border-radius: 16px;
-  width: 498px;
+  width: 496px;
   height: 610px;
 }
 
@@ -130,11 +132,13 @@
 
 .modal__label_name {
   margin-top: 72px;
+  border-bottom: 1px solid black;
 }
 
 .modal__label_image {
   margin-top: 24px;
   margin-bottom: 24px;
+  border-bottom: 1px solid black;
 }
 
 .modal__label_type_radio {
@@ -144,8 +148,9 @@
 
 .modal__input {
   display: block;
-  border-bottom: 1px solid black;
+  border: none;
   width: 440px;
+  margin-top: 8px;
 }
 
 .modal__radio-btns {

@@ -1,9 +1,9 @@
 .card {
   position: relative;
+  height: 325px;
   width: 323px;
   display: flex;
   justify-content: center;
-  /* border:; */
   border-radius: 16px;
 }
 
