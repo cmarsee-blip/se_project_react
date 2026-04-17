@@ -1,5 +1,5 @@
 import "./DeleteConfirmation.css";
-import close from "../../assets/modalclose.png";
+import close from "../../assets/modalclose.svg";
 
 function DeleteConfirmation({ isOpen, onClose, card, handleCardDelete }) {
   const handleDeleteClick = () => {

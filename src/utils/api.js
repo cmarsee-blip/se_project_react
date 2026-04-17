@@ -5,7 +5,6 @@ const headers = {
 };
 
 export const handleServerResponse = (res) => {
-  console.log(res);
   return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
 };
 

@@ -1,5 +1,5 @@
 import "./ModalWithForm.css";
-import close from "../../assets/modalclose.png";
+import close from "../../assets/modalclose.svg";
 
 function ModalWithForm({
   children,
@@ -16,10 +16,7 @@ function ModalWithForm({
       className={`modal modal_type_${name} ${isOpen ? "modal_opened" : ""}`}
       onClick={onClose}
     >
-      <div
-        className="modal__content modal__content_type_image"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="modal__content" onClick={(e) => e.stopPropagation()}>
         <h2 className="modal__title">{title}</h2>
         <button
           onClick={onClose}

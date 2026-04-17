@@ -8,6 +8,7 @@
 .clothes-section__btn {
   margin-left: 20px;
   border: none;
+  background-color: transparent;
 }
 
 .clothes-section__list {

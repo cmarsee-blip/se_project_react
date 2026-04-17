@@ -3,14 +3,52 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
   const defaultValues = { name: "", imageUrl: "", weather: "" };
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormWithValidation(defaultValues);
+
+  const validators = {
+    name: (v) => {
+      if (!v || !v.trim()) return "Name is required.";
+      if (v.trim().length > 30) return "Name must be 30 characters or less.";
+      return "";
+    },
+    imageUrl: (v) => {
+      if (!v || !v.trim()) return "Image URL is required.";
+      try {
+        // basic URL validation
+        // allow http(s) only
+        const url = new URL(v);
+        if (!/^https?:/.test(url.protocol))
+          return "Enter a valid URL (http/https).";
+      } catch (err) {
+        return "Enter a valid URL.";
+      }
+      return "";
+    },
+    weather: (v) => {
+      if (!v) return "Select a weather type.";
+      return "";
+    },
+  };
+
+  const {
+    values,
+    handleChange,
+    errors,
+    resetForm,
+    validateAll,
+    showErrors,
+    setShowErrors,
+  } = useFormWithValidation(defaultValues, validators);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    // don't submit if form invalid
-    if (!isValid) return;
+    const valid = validateAll();
+    if (!valid) {
+      // enable showing errors after failed submit
+      setShowErrors(true);
+      return;
+    }
     onAddItem(values);
+    resetForm(defaultValues, {}, false);
   }
 
   return (
@@ -20,44 +58,44 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      isSubmitDisabled={!isValid}
     >
       <label htmlFor="name" className="modal__label_name">
         Name{" "}
         <input
           name="name"
           type="text"
-          className="modal__input"
           id="name"
           placeholder="Name"
-          required
-          minLength="1"
-          maxLength="30"
           value={values.name}
           onChange={handleChange}
-          aria-invalid={!!errors.name}
+          aria-invalid={showErrors && !!errors.name}
           aria-describedby="name-error"
+          className={
+            "modal__input" +
+            (showErrors && errors.name ? " modal__input_invalid" : "")
+          }
         />
         <span className="modal__error" id="name-error">
-          {errors.name || ""}
+          {showErrors && errors.name ? errors.name : ""}
         </span>
       </label>
       <label htmlFor="imageUrl" className="modal__label_image">
         Image{" "}
         <input
-          type="url"
           name="imageUrl"
-          className="modal__input"
+          className={
+            "modal__input" +
+            (showErrors && errors.imageUrl ? " modal__input_invalid" : "")
+          }
           id="imageUrl"
           placeholder="Image URL"
-          required
           value={values.imageUrl}
           onChange={handleChange}
-          aria-invalid={!!errors.imageUrl}
+          aria-invalid={showErrors && !!errors.imageUrl}
           aria-describedby="imageUrl-error"
         />
         <span className="modal__error" id="imageUrl-error">
-          {errors.imageUrl || ""}
+          {showErrors && errors.imageUrl ? errors.imageUrl : ""}
         </span>
       </label>
       <fieldset className="modal__radio-btns">
@@ -67,10 +105,12 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
             name="weather"
             id="hot"
             type="radio"
-            className="modal__radio-input"
+            className={
+              "modal__radio-input" +
+              (showErrors && errors.weather ? " modal__radio-invalid" : "")
+            }
             value="hot"
             onChange={handleChange}
-            required
           />{" "}
           Hot
         </label>
@@ -96,6 +136,9 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
           />{" "}
           Cold
         </label>
+        <span className="modal__error" id="weather-error">
+          {showErrors && errors.weather ? errors.weather : ""}
+        </span>
       </fieldset>
     </ModalWithForm>
   );

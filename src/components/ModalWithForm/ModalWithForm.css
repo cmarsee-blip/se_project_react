@@ -20,6 +20,7 @@
   height: 20px;
   top: 28px;
   left: 28px;
+  margin-bottom: 0;
 }
 
 .modal__caption {
@@ -43,19 +44,28 @@
 }
 
 .modal__content {
-  background-color: #fff;
-  position: relative;
-  padding: 28px 28px 36px;
-  max-width: 436px;
-  max-height: 496px;
-  box-sizing: border-box;
+  max-width: 496px;
   width: 100%;
+  min-height: 436px;
+  background-color: #fff;
+  border-radius: 20px;
+  position: relative;
+  box-sizing: border-box;
+  padding: 28px 28px 36px;
 }
 
 .modal__content_type_image {
   border-radius: 16px;
   width: 496px;
-  height: 610px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.modal__footer {
+  padding: 20px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .modal__content_confirm {
@@ -90,6 +100,7 @@
   bottom: 74px;
   color: #ff4d00;
   border: none;
+  background-color: transparent;
 }
 
 .modal__delete_confirm {
@@ -132,13 +143,10 @@
 
 .modal__label_name {
   margin-top: 72px;
-  border-bottom: 1px solid black;
 }
 
 .modal__label_image {
-  margin-top: 24px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid black;
+  padding: 0;
 }
 
 .modal__label_type_radio {
@@ -149,8 +157,12 @@
 .modal__input {
   display: block;
   border: none;
-  width: 440px;
+  border-bottom: 1px solid #000; /* default bottom border moved from label to input */
+  max-width: 440px;
   margin-top: 8px;
+  margin-bottom: 6px; /* space between control and its error message */
+  background: transparent;
+  padding: 4px 0; /* give some vertical padding so border isn't too close to text */
 }
 
 .modal__radio-btns {
@@ -160,28 +172,46 @@
   padding: 0;
   width: 195px;
   height: 108px;
+  margin-bottom: 6px; /* leave room for radio error message */
 }
 
 .modal__submit {
-  gap: 12px;
-  background: #0000004d;
-  border-radius: 4px;
-  color: #fff;
+  width: 124px;
+  height: 36px;
   font-size: 16px;
   line-height: 20px;
-  height: 36px;
-  width: 140px;
-  font-weight: 700;
-  letter-spacing: 0%;
-  margin-top: 32px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  border-radius: 4px;
+  border: none;
+  margin-top: 24px;
+}
+
+.modal__submit:hover {
+  background: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
 }
 
 .modal__error {
+  display: block;
   color: #ff4d4f; /* red-ish for errors */
   font-size: 12px;
   line-height: 16px;
   margin-top: 6px;
-  height: 16px; /* reserve space to avoid layout shift */
+  margin-bottom: 12px;
+  min-height: 16px; /* reserve space to avoid layout shift */
+}
+
+.modal__input_invalid {
+  border-bottom: 1px solid #ff4d4f;
+}
+
+.modal__radio-invalid {
+  outline: 2px solid rgba(255, 77, 79, 0.25);
+  border-radius: 4px;
 }
 
 .modal__weather {

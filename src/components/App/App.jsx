@@ -28,6 +28,8 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLocating, setIsLocating] = useState(false);
+  const [cityPromptVisible, setCityPromptVisible] = useState(false);
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -79,12 +81,63 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, apiKey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
+    setIsLocating(true);
+    // Try to get the user's location via the browser Geolocation API.
+    // If successful, request weather for that location. Otherwise fall back
+    // to the default coordinates from `constants.js`.
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const userCoords = {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          };
+          getWeather(userCoords, apiKey)
+            .then((data) => {
+              const filteredData = filterWeatherData(data);
+              setWeatherData(filteredData);
+              setIsLocating(false);
+            })
+            .catch((err) => {
+              console.error("Error fetching weather for user location:", err);
+              // fallback
+              getWeather(coordinates, apiKey)
+                .then((data) => {
+                  setWeatherData(filterWeatherData(data));
+                  setIsLocating(false);
+                })
+                .catch((e) => {
+                  console.error(e);
+                  setIsLocating(false);
+                });
+            });
+        },
+        (err) => {
+          // If the user denies permission or there is an error, prompt the
+          // user to enter their city so we can resolve it via OpenWeather
+          // Geocoding API (no third-party IP geolocation).
+          console.warn(
+            "Geolocation failed or denied, prompting for city:",
+            err,
+          );
+          setCityPromptVisible(true);
+          setIsLocating(false);
+        },
+        { timeout: 5000 },
+      );
+    } else {
+      // No geolocation support — use default coordinates
+      getWeather(coordinates, apiKey)
+        .then((data) => {
+          const filteredData = filterWeatherData(data);
+          setWeatherData(filteredData);
+          setIsLocating(false);
+        })
+        .catch((e) => {
+          console.error(e);
+          setIsLocating(false);
+        });
+    }
 
     getItems()
       .then((data) => {
@@ -93,13 +146,86 @@ function App() {
       .catch(console.error);
   }, []);
 
+  async function handleCitySubmit(city) {
+    // Return a result object: { success: boolean, message?: string }
+    if (!city || !city.trim()) {
+      return { success: false, message: "Please enter a city name." };
+    }
+    setIsLocating(true);
+
+    try {
+      const res = await fetch(
+        `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+          city,
+        )}&limit=1&appid=${apiKey}`,
+      );
+
+      if (!res.ok) {
+        // HTTP level failure
+        console.error("Geocoding HTTP error", res.status);
+        setIsLocating(false);
+        return {
+          success: false,
+          message: "Unable to resolve city (network error).",
+        };
+      }
+
+      const geo = await res.json();
+      if (!Array.isArray(geo) || geo.length === 0) {
+        setIsLocating(false);
+        return { success: false, message: `No results found for "${city}".` };
+      }
+
+      const { lat, lon } = geo[0];
+      const data = await getWeather({ latitude: lat, longitude: lon }, apiKey);
+
+      if (!data) {
+        setIsLocating(false);
+        return {
+          success: false,
+          message: "Weather lookup failed for that location.",
+        };
+      }
+
+      setWeatherData(filterWeatherData(data));
+      setCityPromptVisible(false);
+      setIsLocating(false);
+      return { success: true };
+    } catch (err) {
+      console.error("City geocoding failed:", err);
+      // keep the prompt visible so user can try again; don't silently fall back
+      setIsLocating(false);
+      return {
+        success: false,
+        message: err?.message || "An unexpected error occurred.",
+      };
+    }
+  }
+
+  function handleCityCancel() {
+    // user cancelled entering a city: fall back to defaults
+    setCityPromptVisible(false);
+    setIsLocating(true);
+    getWeather(coordinates, apiKey)
+      .then((data) => setWeatherData(filterWeatherData(data)))
+      .catch(console.error)
+      .finally(() => setIsLocating(false));
+  }
+
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
       <div className="page">
         <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header
+            handleAddClick={handleAddClick}
+            weatherData={weatherData}
+            isLocating={isLocating}
+            cityPromptVisible={cityPromptVisible}
+            onCitySubmit={handleCitySubmit}
+            onCityCancel={handleCityCancel}
+          />
           <Routes>
             <Route
               path="/profile"

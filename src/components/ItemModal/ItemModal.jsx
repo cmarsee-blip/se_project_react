@@ -1,5 +1,5 @@
 import "./ItemModal.css";
-import close from "../../assets/modalclose.png";
+import close from "../../assets/modalclose.svg";
 
 function ItemModal({ isOpen, onClose, card, handleConfirmClick }) {
   const handleDeleteClick = () => {
@@ -26,8 +26,10 @@ function ItemModal({ isOpen, onClose, card, handleConfirmClick }) {
           className="modal__image"
         />
         <div className="modal__footer">
-          <h2 className="modal__caption">{card.name}</h2>
-          <p className="modal__weather">Weather: {card.weather}</p>
+          <div>
+            <h2 className="modal__caption">{card.name}</h2>
+            <p className="modal__weather">Weather: {card.weather}</p>
+          </div>
           <button
             onClick={handleDeleteClick}
             type="button"

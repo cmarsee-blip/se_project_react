@@ -15,10 +15,33 @@
   flex-grow: 1;
 }
 
+.header__locating {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #444;
+}
+
+.header__spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  border-top-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  animation: header-spin 0.8s linear infinite;
+}
+
+@keyframes header-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .header__add-clothes-btn {
   margin: 0 20px 0 auto;
   font-size: 20px;
   border: none;
+  background-color: transparent;
 }
 
 .header__user-container {
@@ -37,4 +60,38 @@
 .header__nav-link {
   color: black;
   text-decoration: none;
+}
+
+.header__city-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header__city-input {
+  font-size: 16px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.header__city-submit,
+.header__city-cancel {
+  font-size: 14px;
+  padding: 6px 8px;
+  border: none;
+  background: #0000004d;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.header__city-cancel {
+  background: transparent;
+  color: #000;
+}
+
+.header__city-error {
+  color: #ff4d4f;
+  font-size: 12px;
+  margin-top: 4px;
 }
