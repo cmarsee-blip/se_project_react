@@ -43,6 +43,10 @@
   color: #fff;
 }
 
+.modal__close-btn-grey {
+  color: grey;
+}
+
 .modal__content {
   max-width: 496px;
   width: 100%;
