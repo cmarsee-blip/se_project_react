@@ -74,9 +74,10 @@
 
 .modal__content_confirm {
   display: flex;
+  justify-content: center;
   border-radius: 20px;
-  width: 670px;
-  height: 280px;
+  max-width: 670px;
+  min-height: 280px;
 }
 
 .modal__confirm {
@@ -133,6 +134,7 @@
 }
 
 .modal__image {
+  max-height: 498px;
   width: 100%;
 }
 
@@ -162,7 +164,7 @@
   display: block;
   border: none;
   border-bottom: 1px solid #000; /* default bottom border moved from label to input */
-  max-width: 440px;
+  width: 100%;
   margin-top: 8px;
   margin-bottom: 6px; /* space between control and its error message */
   background: transparent;
