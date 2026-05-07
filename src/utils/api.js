@@ -29,3 +29,13 @@ export const removeItem = (itemId) => {
     headers,
   }).then(handleServerResponse);
 };
+
+export const signUp = ({ email, name, password, avatar }) => {
+  return fetch(`${baseUrl}/signUp`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, avatar, email, password }),
+  });
+};

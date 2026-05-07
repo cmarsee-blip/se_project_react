@@ -10,9 +10,10 @@ import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 import ItemModal from "../ItemModal/ItemModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
-import { addItem, getItems, removeItem } from "../../utils/api";
+import { addItem, getItems, removeItem, signUp } from "../../utils/api";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 
 function App() {
@@ -38,6 +39,17 @@ function App() {
   const handleCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
+  };
+
+  const onRegisterUser = (inputValues) => {
+    const newUser = {
+      name: inputValues.name,
+      email: inputValues.email,
+      password: inputValues.password,
+      avatar: inputValues.avatar,
+    };
+
+    signUp(newUser).then(() => {});
   };
 
   const onAddItem = (inputValues) => {
@@ -250,6 +262,11 @@ function App() {
           </Routes>
           <Footer>Cody Marsee</Footer>
         </div>
+        <RegisterModal
+          isOpen={activeModal === "register-user"}
+          onClose={closeActiveModal}
+          onRegisterUser={onRegisterUser}
+        ></RegisterModal>
         <AddItemModal
           isOpen={activeModal === "add-garment"}
           onClose={closeActiveModal}
