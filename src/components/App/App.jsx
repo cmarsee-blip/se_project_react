@@ -18,6 +18,7 @@ import { addItem, getItems, removeItem } from "../../utils/api";
 import { signIn, signUp, checkToken } from "../../utils/auth";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -36,6 +37,7 @@ function App() {
   const [cityPromptVisible, setCityPromptVisible] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleToggleSwitchChange = () => {
@@ -90,6 +92,18 @@ function App() {
     }
   };
 
+  const handleLogin = async (userData) => {
+    try {
+      const response = await signin(userData);
+      localStorage.setItem("jwt", response.token);
+      setCurrentUser(response.user);
+      setIsLoggedIn(true);
+      setIsLoginModalOpen(false);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
   const handleRegistration = async (userData) => {
     try {
       await signup(userData);
@@ -102,6 +116,9 @@ function App() {
       });
 
       localStorage.setItem("jwt", loginResponse.token);
+      setCurrentUser(loginResponse.user);
+      setIsLoggedIn(loginResponse.user);
+      setIsRegisterModalOpen(false);
     } catch (error) {
       console.error("Registration failed:", error);
     }
@@ -280,74 +297,76 @@ function App() {
   }
 
   return (
-    <CurrentTemperatureUnitContext.Provider
-      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-    >
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <div className="page__content">
-          <Header
-            handleAddClick={handleAddClick}
-            weatherData={weatherData}
-            isLocating={isLocating}
-            cityPromptVisible={cityPromptVisible}
-            onCitySubmit={handleCitySubmit}
-            onCityCancel={handleCityCancel}
-          />
-          <Routes>
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile
-                    onAddClick={handleAddClick}
-                    onCardClick={handleCardClick}
+        <CurrentTemperatureUnitContext.Provider
+          value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+        >
+          <div className="page__content">
+            <Header
+              handleAddClick={handleAddClick}
+              weatherData={weatherData}
+              isLocating={isLocating}
+              cityPromptVisible={cityPromptVisible}
+              onCitySubmit={handleCitySubmit}
+              onCityCancel={handleCityCancel}
+            />
+            <Routes>
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile
+                      onAddClick={handleAddClick}
+                      onCardClick={handleCardClick}
+                      clothingItems={clothingItems}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/"
+                element={
+                  <Main
                     clothingItems={clothingItems}
+                    weatherData={weatherData}
+                    handleCardClick={handleCardClick}
                   />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/"
-              element={
-                <Main
-                  clothingItems={clothingItems}
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                />
-              }
-            />
-          </Routes>
-          <Footer>Cody Marsee</Footer>
-        </div>
-        <LoginModal
-          isOpen={activeModal === "login-user"}
-          onClose={closeActiveModal}
-          onRegisterUser={onLoginUser}
-        ></LoginModal>
-        <RegisterModal
-          isOpen={activeModal === "register-user"}
-          onClose={closeActiveModal}
-          onRegisterUser={onRegisterUser}
-        ></RegisterModal>
-        <AddItemModal
-          isOpen={activeModal === "add-garment"}
-          onClose={closeActiveModal}
-          onAddItem={onAddItem}
-        ></AddItemModal>
-        <ItemModal
-          isOpen={activeModal === "preview"}
-          card={selectedCard}
-          onClose={closeActiveModal}
-          handleConfirmClick={handleConfirmClick}
-        />
-        <DeleteConfirmation
-          isOpen={activeModal === "confirm"}
-          card={selectedCard}
-          onClose={closeActiveModal}
-          handleCardDelete={handleCardDelete}
-        />
+                }
+              />
+            </Routes>
+            <Footer>Cody Marsee</Footer>
+          </div>
+          <LoginModal
+            isOpen={activeModal === "login-user"}
+            onClose={closeActiveModal}
+            onRegisterUser={onLoginUser}
+          ></LoginModal>
+          <RegisterModal
+            isOpen={activeModal === "register-user"}
+            onClose={closeActiveModal}
+            onRegisterUser={onRegisterUser}
+          ></RegisterModal>
+          <AddItemModal
+            isOpen={activeModal === "add-garment"}
+            onClose={closeActiveModal}
+            onAddItem={onAddItem}
+          ></AddItemModal>
+          <ItemModal
+            isOpen={activeModal === "preview"}
+            card={selectedCard}
+            onClose={closeActiveModal}
+            handleConfirmClick={handleConfirmClick}
+          />
+          <DeleteConfirmation
+            isOpen={activeModal === "confirm"}
+            card={selectedCard}
+            onClose={closeActiveModal}
+            handleCardDelete={handleCardDelete}
+          />
+        </CurrentTemperatureUnitContext.Provider>
       </div>
-    </CurrentTemperatureUnitContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 
