@@ -14,7 +14,10 @@ export const getItems = () =>
 export const addItem = ({ name, imageUrl, weather }) => {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({
       name,
       imageUrl,
@@ -28,14 +31,4 @@ export const removeItem = (itemId) => {
     method: "DELETE",
     headers,
   }).then(handleServerResponse);
-};
-
-export const signUp = ({ email, name, password, avatar }) => {
-  return fetch(`${baseUrl}/signUp`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ name, avatar, email, password }),
-  });
 };

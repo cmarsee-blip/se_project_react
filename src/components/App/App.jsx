@@ -11,10 +11,13 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 import ItemModal from "../ItemModal/ItemModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import LoginModal from "../LoginModal/LoginModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
-import { addItem, getItems, removeItem, signUp } from "../../utils/api";
+import { addItem, getItems, removeItem } from "../../utils/api";
+import { signIn, signUp, checkToken } from "../../utils/auth";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -31,6 +34,9 @@ function App() {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [isLocating, setIsLocating] = useState(false);
   const [cityPromptVisible, setCityPromptVisible] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -50,6 +56,55 @@ function App() {
     };
 
     signUp(newUser).then(() => {});
+  };
+
+  const onLoginUser = (inputValues) => {
+    const currentUser = {
+      email: inputValues.email,
+      password: inputValues.password,
+    };
+
+    signIn(currentUser).then(() => {});
+  };
+
+  useEffect(() => {
+    checkUserToken();
+  }, []);
+
+  const checkUserToken = async () => {
+    const token = localStorage.getItem("jwt");
+
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const userData = await checkToken(token);
+      setCurrentUser(userData);
+    } catch (error) {
+      localStorage.removeItem("jwt");
+      console.error("Token validation failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRegistration = async (userData) => {
+    try {
+      await signup(userData);
+
+      setIsRegisterModalOpen(false);
+
+      const loginResponse = await signin({
+        email: userData.email,
+        password: userData.password,
+      });
+
+      localStorage.setItem("jwt", loginResponse.token);
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
   };
 
   const onAddItem = (inputValues) => {
@@ -242,11 +297,13 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile
-                  onAddClick={handleAddClick}
-                  onCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                />
+                <ProtectedRoute>
+                  <Profile
+                    onAddClick={handleAddClick}
+                    onCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                  />
+                </ProtectedRoute>
               }
             />
             <Route
@@ -262,6 +319,11 @@ function App() {
           </Routes>
           <Footer>Cody Marsee</Footer>
         </div>
+        <LoginModal
+          isOpen={activeModal === "login-user"}
+          onClose={closeActiveModal}
+          onRegisterUser={onLoginUser}
+        ></LoginModal>
         <RegisterModal
           isOpen={activeModal === "register-user"}
           onClose={closeActiveModal}
