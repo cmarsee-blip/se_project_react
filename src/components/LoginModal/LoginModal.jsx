@@ -31,6 +31,7 @@ const LoginModal = ({ isOpen, onClose, onLoginUser }) => {
           value={values.email}
           onChange={handleChange}
           className={"modal__input"}
+          required
         />
       </label>
       <label htmlFor="password" className="modal__label_password">
@@ -43,6 +44,7 @@ const LoginModal = ({ isOpen, onClose, onLoginUser }) => {
           value={values.password}
           onChange={handleChange}
           className={"modal__input"}
+          required
         />
       </label>
     </ModalWithForm>

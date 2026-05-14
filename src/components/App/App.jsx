@@ -39,6 +39,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSignedOut, setIsSignedOut] = useState(false);
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -47,26 +48,6 @@ function App() {
   const handleCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
-  };
-
-  const onRegisterUser = (inputValues) => {
-    const newUser = {
-      name: inputValues.name,
-      email: inputValues.email,
-      password: inputValues.password,
-      avatar: inputValues.avatar,
-    };
-
-    signUp(newUser).then(() => {});
-  };
-
-  const onLoginUser = (inputValues) => {
-    const currentUser = {
-      email: inputValues.email,
-      password: inputValues.password,
-    };
-
-    signIn(currentUser).then(() => {});
   };
 
   useEffect(() => {
@@ -124,6 +105,13 @@ function App() {
     }
   };
 
+  const handleSignOut = async (userData) => {
+    removeToken();
+    setCurrentUser(null);
+    setIsLoggedIn(false);
+    setIsSignedOut(true);
+  };
+
   const onAddItem = (inputValues) => {
     const newCardData = {
       name: inputValues.name,
@@ -158,6 +146,27 @@ function App() {
 
   const handleConfirmClick = () => {
     setActiveModal("confirm");
+  };
+
+  const handleCardLike = ({ id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+    !isLiked
+      ? api
+          .addCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item)),
+            );
+          })
+          .catch((err) => console.log(err))
+      : api
+          .removeCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item)),
+            );
+          })
+          .catch((err) => console.log(err));
   };
 
   const closeActiveModal = () => {
@@ -310,6 +319,8 @@ function App() {
               cityPromptVisible={cityPromptVisible}
               onCitySubmit={handleCitySubmit}
               onCityCancel={handleCityCancel}
+              isLoggedIn={isLoggedIn}
+              isOpen={activeModal === "sign-up"}
             />
             <Routes>
               <Route
@@ -340,12 +351,12 @@ function App() {
           <LoginModal
             isOpen={activeModal === "login-user"}
             onClose={closeActiveModal}
-            onRegisterUser={onLoginUser}
+            onLoginUser={handleLogin}
           ></LoginModal>
           <RegisterModal
             isOpen={activeModal === "register-user"}
             onClose={closeActiveModal}
-            onRegisterUser={onRegisterUser}
+            onRegisterUser={handleRegistration}
           ></RegisterModal>
           <AddItemModal
             isOpen={activeModal === "add-garment"}
@@ -357,6 +368,7 @@ function App() {
             card={selectedCard}
             onClose={closeActiveModal}
             handleConfirmClick={handleConfirmClick}
+            handleLike={handleCardLike}
           />
           <DeleteConfirmation
             isOpen={activeModal === "confirm"}
