@@ -6,24 +6,23 @@ import logo from "../../assets/logo.svg";
 import avatarDefault from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
-function Header({ handleAddClick, weatherData, isLoggedIn }) {
+function Header({
+  handleAddClick,
+  weatherData,
+  isLoggedIn,
+  handleLogInClick,
+  handleSignUpClick,
+}) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
 
   const currentUser = useContext(CurrentUserContext);
+  console.log(currentUser?.name);
 
   const username = "Terrence Tegegne";
   const avatar = avatarDefault;
-
-  const handleSignUpClick = () => {
-    setActiveModal("sign-up");
-  };
-
-  const handleLogInClick = () => {
-    setActiveModal("log-in");
-  };
 
   return (
     <header className="header">
@@ -62,7 +61,7 @@ function Header({ handleAddClick, weatherData, isLoggedIn }) {
             </div>
           </div>
         ) : (
-          <div className="aheader__auth-container">
+          <div className="header__auth-container">
             <button onClick={handleSignUpClick} className="header__signup-btn">
               Sign Up
             </button>

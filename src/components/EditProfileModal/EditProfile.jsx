@@ -2,7 +2,7 @@ import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const EditProfileModal = ({ isOpen, onClose }) => {
-  const defaultValues = { name: "", avatar: "" };
+  const defaultValues = { name: "", avatarUrl: "" };
 
   const validators = {
     name: (v) => {
@@ -10,7 +10,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
       if (v.trim().length > 30) return "Name must be 30 characters or less.";
       return "";
     },
-    avatar: (v) => {
+    avatarUrl: (v) => {
       if (!v || !v.trim()) return "Avatar URL is required.";
       try {
         const url = new URL(v);
@@ -21,6 +21,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
       }
       return "";
     },
+  };
 
   const {
     values,
@@ -29,7 +30,8 @@ const EditProfileModal = ({ isOpen, onClose }) => {
     resetForm,
     validateAll,
     showErrors,
-    setShowErrors, } = useFormWithValidation(defaultValues, validators);
+    setShowErrors,
+  } = useFormWithValidation(defaultValues, validators);
 
   function handleSubmit(evt) {
     evt.preventDefault();

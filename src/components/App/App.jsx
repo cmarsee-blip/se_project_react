@@ -50,6 +50,14 @@ function App() {
     setSelectedCard(card);
   };
 
+  const handleSignUpClick = () => {
+    setActiveModal("register-user");
+  };
+
+  const handleLogInClick = () => {
+    setActiveModal("login-user");
+  };
+
   useEffect(() => {
     checkUserToken();
   }, []);
@@ -64,6 +72,7 @@ function App() {
 
     try {
       const userData = await checkToken(token);
+      console.log(userData);
       setCurrentUser(userData);
     } catch (error) {
       localStorage.removeItem("jwt");
@@ -75,11 +84,11 @@ function App() {
 
   const handleLogin = async (userData) => {
     try {
-      const response = await signin(userData);
+      const response = await signIn(userData);
       localStorage.setItem("jwt", response.token);
       setCurrentUser(response.user);
       setIsLoggedIn(true);
-      setIsLoginModalOpen(false);
+      closeActiveModal();
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -87,18 +96,18 @@ function App() {
 
   const handleRegistration = async (userData) => {
     try {
-      await signup(userData);
+      await signUp(userData);
 
       setIsRegisterModalOpen(false);
 
-      const loginResponse = await signin({
+      const loginResponse = await signIn({
         email: userData.email,
         password: userData.password,
       });
 
       localStorage.setItem("jwt", loginResponse.token);
       setCurrentUser(loginResponse.user);
-      setIsLoggedIn(loginResponse.user);
+      setIsLoggedIn(true);
       setIsRegisterModalOpen(false);
     } catch (error) {
       console.error("Registration failed:", error);
@@ -321,6 +330,8 @@ function App() {
               onCityCancel={handleCityCancel}
               isLoggedIn={isLoggedIn}
               isOpen={activeModal === "sign-up"}
+              handleLogInClick={handleLogInClick}
+              handleSignUpClick={handleSignUpClick}
             />
             <Routes>
               <Route
