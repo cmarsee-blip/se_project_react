@@ -86,7 +86,8 @@ function App() {
     try {
       const response = await signIn(userData);
       localStorage.setItem("jwt", response.token);
-      setCurrentUser(response.user);
+      const user = await checkToken(response.token);
+      setCurrentUser(user);
       setIsLoggedIn(true);
       closeActiveModal();
     } catch (error) {
