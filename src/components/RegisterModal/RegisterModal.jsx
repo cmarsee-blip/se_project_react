@@ -24,11 +24,13 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
 
   return (
     <ModalWithForm
-      title="New user"
+      title="Sign up"
       name="Register-user"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText="Next"
+      altButtonText="or Log in"
     >
       <label htmlFor="email" className="modal__label_email">
         Email{" "}
@@ -42,18 +44,6 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
           className={"modal__input"}
         />
       </label>
-      <label htmlFor="name" className="modal__label_name">
-        Name{" "}
-        <input
-          name="name"
-          type="text"
-          id="name"
-          placeholder="Name"
-          value={values.name}
-          onChange={handleChange}
-          className={"modal__input"}
-        />
-      </label>
       <label htmlFor="password" className="modal__label_password">
         Password{" "}
         <input
@@ -62,6 +52,21 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
           id="password"
           placeholder="Password"
           value={values.password}
+          onChange={handleChange}
+          className={"modal__input"}
+        />
+      </label>
+      <label
+        htmlFor="name"
+        className="modal__label_name modal__label_name-sign-up"
+      >
+        Name{" "}
+        <input
+          name="name"
+          type="text"
+          id="name"
+          placeholder="Name"
+          value={values.name}
           onChange={handleChange}
           className={"modal__input"}
         />

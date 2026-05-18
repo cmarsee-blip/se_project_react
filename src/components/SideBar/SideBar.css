@@ -17,6 +17,15 @@
   display: block;
 }
 
+.sidebar__btn {
+  display: flex;
+  margin-top: 24px;
+  margin-left: 15px;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+}
+
 .sidebar__username {
   margin: 0;
   font-size: 20px;

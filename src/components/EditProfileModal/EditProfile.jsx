@@ -41,7 +41,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
       setShowErrors(true);
       return;
     }
-    onAddItem(values);
+    onEditProfile(values);
     resetForm(defaultValues, {}, false);
   }
 
@@ -52,6 +52,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText="Save changes"
     >
       <label htmlFor="name" className="modal__label_name">
         Name{" "}

@@ -10,12 +10,19 @@ import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 import ItemModal from "../ItemModal/ItemModal";
+import EditProfileModal from "../EditProfileModal/EditProfile";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
-import { addItem, getItems, removeItem } from "../../utils/api";
-import { signIn, signUp, checkToken } from "../../utils/auth";
+import {
+  addItem,
+  getItems,
+  removeItem,
+  likeItem,
+  unlikeItem,
+} from "../../utils/api";
+import { signIn, signUp, checkToken, updateProfile } from "../../utils/auth";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
@@ -58,6 +65,15 @@ function App() {
     setActiveModal("login-user");
   };
 
+  const handleEditProfileClick = () => {
+    setActiveModal("edit-profile");
+  };
+
+  const handleSignOutClick = () => {
+    setIsLoggedIn(false);
+    closeActiveModal();
+  };
+
   useEffect(() => {
     checkUserToken();
   }, []);
@@ -73,7 +89,10 @@ function App() {
     try {
       const userData = await checkToken(token);
       console.log(userData);
-      setCurrentUser(userData);
+      if (userData) {
+        setIsLoggedIn(true);
+        setCurrentUser(userData);
+      }
     } catch (error) {
       localStorage.removeItem("jwt");
       console.error("Token validation failed:", error);
@@ -122,6 +141,13 @@ function App() {
     setIsSignedOut(true);
   };
 
+  const onEditProfile = (userData) => {
+    updateProfile(userData).then((updatedUser) => {
+      setCurrentUser(updatedUser);
+    });
+    closeActiveModal();
+  };
+
   const onAddItem = (inputValues) => {
     const newCardData = {
       name: inputValues.name,
@@ -161,16 +187,14 @@ function App() {
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
     !isLiked
-      ? api
-          .addCardLike(id, token)
+      ? likeItem(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
               cards.map((item) => (item._id === id ? updatedCard : item)),
             );
           })
           .catch((err) => console.log(err))
-      : api
-          .removeCardLike(id, token)
+      : unlikeItem(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
               cards.map((item) => (item._id === id ? updatedCard : item)),
@@ -338,11 +362,14 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute>
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
                     <Profile
                       onAddClick={handleAddClick}
                       onCardClick={handleCardClick}
                       clothingItems={clothingItems}
+                      handleEditProfileClick={handleEditProfileClick}
+                      handleSignOutClick={handleSignOutClick}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }
@@ -381,6 +408,11 @@ function App() {
             onClose={closeActiveModal}
             handleConfirmClick={handleConfirmClick}
             handleLike={handleCardLike}
+          />
+          <EditProfileModal
+            isOpen={activeModal === "edit-profile"}
+            onClose={closeActiveModal}
+            onEditProfile={onEditProfile}
           />
           <DeleteConfirmation
             isOpen={activeModal === "confirm"}

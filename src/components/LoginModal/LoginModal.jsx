@@ -15,11 +15,13 @@ const LoginModal = ({ isOpen, onClose, onLoginUser }) => {
 
   return (
     <ModalWithForm
-      title="Login user"
+      title="Log in"
       name="login-user"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText="Log in"
+      altButtonText="or Register"
     >
       <label htmlFor="email" className="modal__label_email">
         Email{" "}

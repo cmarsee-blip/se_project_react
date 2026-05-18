@@ -147,8 +147,22 @@
   margin-top: 24px;
 }
 
+.modal__label_avatar {
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
 .modal__label_name {
   margin-top: 72px;
+}
+
+.modal__label_name-sign-up {
+  margin-top: 24px;
+}
+
+.modal__label_email {
+  margin-top: 72px;
+  margin-bottom: 24px;
 }
 
 .modal__label_image {

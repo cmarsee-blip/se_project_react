@@ -1,9 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-const ProtectedRoute = ({ children }) => {
-  const isLoggedIn = false;
-
+const ProtectedRoute = ({ children, isLoggedIn }) => {
   if (!isLoggedIn) {
     return <Navigate to="/" replace />;
   }

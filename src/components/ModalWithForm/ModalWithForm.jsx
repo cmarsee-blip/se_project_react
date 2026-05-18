@@ -10,6 +10,7 @@ function ModalWithForm({
   onClose,
   onSubmit,
   isSubmitDisabled = false,
+  altButtonText,
 }) {
   return (
     <div
@@ -35,6 +36,11 @@ function ModalWithForm({
           >
             {buttonText}
           </button>
+          {altButtonText ? (
+            <button type="button" className="modal__submit-next">
+              {altButtonText}
+            </button>
+          ) : null}
         </form>
       </div>
     </div>

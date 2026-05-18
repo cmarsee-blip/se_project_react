@@ -32,3 +32,14 @@ export const checkToken = (token) => {
     },
   }).then(handleServerResponse);
 };
+
+export const updateProfile = ({ name, avatar }) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  }).then(handleServerResponse);
+};
