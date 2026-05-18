@@ -5,7 +5,7 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function SideBar({
   handleEditProfileClick,
-  handleSignOutClick,
+  handleSignOutClick = () => {},
 }) {
   const currentUser = useContext(CurrentUserContext);
 

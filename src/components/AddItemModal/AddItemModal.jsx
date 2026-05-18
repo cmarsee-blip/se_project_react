@@ -65,7 +65,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
         <input
           name="name"
           type="text"
-          id="name"
+          id="addItem-name"
           placeholder="Name"
           value={values.name}
           onChange={handleChange}
@@ -76,7 +76,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
             (showErrors && errors.name ? " modal__input_invalid" : "")
           }
         />
-        <span className="modal__error" id="name-error">
+        <span className="modal__error" id="addItem-name-error">
           {showErrors && errors.name ? errors.name : ""}
         </span>
       </label>
@@ -88,14 +88,14 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
             "modal__input" +
             (showErrors && errors.imageUrl ? " modal__input_invalid" : "")
           }
-          id="imageUrl"
+          id="addItem-imageUrl"
           placeholder="Image URL"
           value={values.imageUrl}
           onChange={handleChange}
           aria-invalid={showErrors && !!errors.imageUrl}
           aria-describedby="imageUrl-error"
         />
-        <span className="modal__error" id="imageUrl-error">
+        <span className="modal__error" id="addItem-imageUrl-error">
           {showErrors && errors.imageUrl ? errors.imageUrl : ""}
         </span>
       </label>

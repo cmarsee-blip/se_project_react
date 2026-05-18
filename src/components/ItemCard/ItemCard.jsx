@@ -4,8 +4,8 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 // import close from "../../assets/modalclose.png";
 
 function ItemCard({ item, onCardClick, onCardLike }) {
-  const CurrentUser = useContext(CurrentUserContext);
-  const isLiked = item.likes.some((id) => id === CurrentUser?._id);
+  const currentUser = useContext(CurrentUserContext);
+  const isLiked = item.likes.some((id) => id === currentUser?._id);
   const handleLike = () => {
     onCardLike({ id: item._id, isLiked });
   };
@@ -17,7 +17,7 @@ function ItemCard({ item, onCardClick, onCardLike }) {
   return (
     <li className="card">
       <h2 className="card__name">{item.name}</h2>
-      {CurrentUser && (
+      {currentUser && (
         <button
           className={`card__like-btn ${isLiked ? "card__like-btn_active" : ""}`}
           onClick={handleLike}

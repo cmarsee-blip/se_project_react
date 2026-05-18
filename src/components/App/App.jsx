@@ -71,6 +71,7 @@ function App() {
 
   const handleSignOutClick = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem("jwt");
     closeActiveModal();
   };
 
@@ -135,10 +136,11 @@ function App() {
   };
 
   const handleSignOut = async (userData) => {
-    removeToken();
+    localStorage.removeItem("jwt");
     setCurrentUser(null);
     setIsLoggedIn(false);
     setIsSignedOut(true);
+    navigate("/");
   };
 
   const onEditProfile = (userData) => {

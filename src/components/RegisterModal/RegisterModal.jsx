@@ -5,13 +5,6 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
   const defaultValues = { email: "", password: "", name: "", avatar: "" };
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    avatar: "",
-  });
-
   const { values, handleChange, resetForm } =
     useFormWithValidation(defaultValues);
 
@@ -37,7 +30,7 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
         <input
           name="email"
           type="email"
-          id="email"
+          id="register-email"
           placeholder="Email"
           value={values.email}
           onChange={handleChange}
@@ -49,7 +42,7 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
         <input
           name="password"
           type="password"
-          id="password"
+          id="register-password"
           placeholder="Password"
           value={values.password}
           onChange={handleChange}
@@ -64,7 +57,7 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
         <input
           name="name"
           type="text"
-          id="name"
+          id="register-name"
           placeholder="Name"
           value={values.name}
           onChange={handleChange}
@@ -76,7 +69,7 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
         <input
           name="avatar"
           type="url"
-          id="avatar"
+          id="register-avatar"
           placeholder="Avatar URL"
           value={values.avatar}
           onChange={handleChange}

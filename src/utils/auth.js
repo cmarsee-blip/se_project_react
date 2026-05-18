@@ -8,7 +8,7 @@ const headers = {
 };
 
 export const signUp = ({ email, name, password, avatar }) => {
-  return fetch(`${baseUrl}/signUp`, {
+  return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers,
     body: JSON.stringify({ name, avatar, email, password }),
@@ -16,7 +16,7 @@ export const signUp = ({ email, name, password, avatar }) => {
 };
 
 export const signIn = ({ email, password }) => {
-  return fetch(`${baseUrl}/signIn`, {
+  return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers,
     body: JSON.stringify({ email, password }),
@@ -34,6 +34,7 @@ export const checkToken = (token) => {
 };
 
 export const updateProfile = ({ name, avatar }) => {
+  const token = localStorage.getItem("jwt");
   return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {

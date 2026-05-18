@@ -11,7 +11,10 @@ export default function Profile({
 }) {
   return (
     <section className="profile">
-      <SideBar handleEditProfileClick={handleEditProfileClick} />
+      <SideBar
+        handleEditProfileClick={handleEditProfileClick}
+        handleSignOutClick={handleSignOutClick}
+      />
       <ClothesSection
         onCardClick={onCardClick}
         clothingItems={clothingItems}

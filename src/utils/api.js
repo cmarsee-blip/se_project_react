@@ -41,7 +41,10 @@ export const removeItem = (itemId) => {
 
   return fetch(`${baseUrl}/items/${itemId}`, {
     method: "DELETE",
-    headers,
+    headers: {
+      "Content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
   }).then(handleServerResponse);
 };
 

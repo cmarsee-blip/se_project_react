@@ -1,7 +1,7 @@
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const EditProfileModal = ({ isOpen, onClose }) => {
+const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
   const defaultValues = { name: "", avatarUrl: "" };
 
   const validators = {
@@ -59,7 +59,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
         <input
           name="name"
           type="text"
-          id="name"
+          id="editProfile-name"
           placeholder="Name"
           value={values.name}
           onChange={handleChange}
@@ -87,7 +87,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
           value={values.avatarUrl}
           onChange={handleChange}
           aria-invalid={showErrors && !!errors.avatarUrl}
-          aria-describedby="imageUrl-error"
+          aria-describedby="editProfile-imageUrl-error"
         />
         <span className="modal__error" id="imageUrl-error">
           {showErrors && errors.avatarUrl ? errors.avatarUrl : ""}
