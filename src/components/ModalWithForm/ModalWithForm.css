@@ -72,6 +72,35 @@
   align-items: center;
 }
 
+.modal__submit_row {
+  display: flex;
+  gap: 12px; /* space between buttons */
+  margin-top: 24px; /* vertical spacing from form content */
+}
+
+/* ensure individual button spacing doesn't add extra vertical gap */
+.modal__submit {
+  margin-top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* style for the alternate button (if needed) */
+.modal__submit-next {
+  height: 36px;
+  padding: 0 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin-top: 24px;
+  color: #000;
+  opacity: 0.5;
+  font-weight: 700;
+}
+
 .modal__content_confirm {
   display: flex;
   justify-content: center;

@@ -30,22 +30,24 @@ function ModalWithForm({
         </button>
         <form onSubmit={onSubmit} className="modal__form" name={name}>
           {children}
-          <button
-            type="submit"
-            className="modal__submit"
-            disabled={isSubmitDisabled}
-          >
-            {buttonText}
-          </button>
-          {altButtonText ? (
+          <div className="modal__submit_row">
             <button
-              type="button"
-              className="modal__submit-next"
-              onClick={altButtonHandler}
+              type="submit"
+              className="modal__submit"
+              disabled={isSubmitDisabled}
             >
-              {altButtonText}
+              {buttonText}
             </button>
-          ) : null}
+            {altButtonText ? (
+              <button
+                type="button"
+                className="modal__submit-next"
+                onClick={altButtonHandler}
+              >
+                {altButtonText}
+              </button>
+            ) : null}
+          </div>
         </form>
       </div>
     </div>
