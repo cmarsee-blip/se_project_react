@@ -124,7 +124,7 @@ function App() {
 
       setIsRegisterModalOpen(false);
 
-      const loginResponse = await signIn({
+      const loginResponse = await handleLogin({
         email: userData.email,
         password: userData.password,
       });
@@ -335,6 +335,17 @@ function App() {
       .catch(console.error)
       .finally(() => setIsLocating(false));
   }
+
+  useEffect(() => {
+    const closeByEscape = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+    document.addEventListener("keydown", closeByEscape);
+
+    return () => document.removeEventListener("keydown", closeByEscape);
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

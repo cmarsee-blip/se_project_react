@@ -1,6 +1,6 @@
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
@@ -36,6 +36,21 @@ const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
     setShowErrors,
   } = useFormWithValidation(defaultValues, validators);
 
+  // populate form with current user data each time modal opens
+  useEffect(() => {
+    if (isOpen && currentUser) {
+      resetForm(
+        {
+          name: currentUser.name || "",
+          avatarUrl: currentUser.avatarUrl || "",
+        },
+        {},
+        true,
+      );
+      setShowErrors(false);
+    }
+  }, [isOpen, currentUser, resetForm, setShowErrors]);
+
   function handleSubmit(evt) {
     evt.preventDefault();
     const valid = validateAll();
@@ -67,20 +82,20 @@ const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
           value={values.name}
           onChange={handleChange}
           aria-invalid={showErrors && !!errors.name}
-          aria-describedby="name-error"
+          aria-describedby="editProfile-name-error"
           className={
             "modal__input" +
             (showErrors && errors.name ? " modal__input_invalid" : "")
           }
         />
-        <span className="modal__error" id="name-error">
+        <span className="modal__error" id="editProfile-name-error">
           {showErrors && errors.name ? errors.name : ""}
         </span>
       </label>
       <label htmlFor="editProfile-avatarUrl" className="modal__label_image">
         Avatar{" "}
         <input
-          name="editProfile-avatarUrl"
+          name="avatarUrl"
           className={
             "modal__input" +
             (showErrors && errors.avatarUrl ? " modal__input_invalid" : "")
@@ -92,7 +107,7 @@ const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
           aria-invalid={showErrors && !!errors.avatarUrl}
           aria-describedby="editProfile-imageUrl-error"
         />
-        <span className="modal__error" id="imageUrl-error">
+        <span className="modal__error" id="editProfile-imageUrl-error">
           {showErrors && errors.avatarUrl ? errors.avatarUrl : ""}
         </span>
       </label>

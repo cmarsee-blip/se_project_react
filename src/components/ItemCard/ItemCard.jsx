@@ -20,8 +20,12 @@ function ItemCard({ item, onCardClick, onCardLike }) {
         <h2 className="card__name">{item.name}</h2>
         {currentUser && (
           <button
+            type="button"
             className={`card__like-btn ${isLiked ? "card__like-btn_active" : ""}`}
             onClick={handleLike}
+            aria-pressed={isLiked}
+            aria-label={isLiked ? "Unlike" : "Like"}
+            title={isLiked ? "Unlike" : "Like"}
           >
             ❤️
           </button>
