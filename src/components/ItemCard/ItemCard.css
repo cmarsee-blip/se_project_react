@@ -7,10 +7,17 @@
   border-radius: 16px;
 }
 
-.card__name {
+.card__header {
   position: absolute;
   top: 15px;
-  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card__name {
+  position: static;
+  margin: 5px;
   border-radius: 16px;
   background-color: #fff;
   height: 24px;
@@ -28,6 +35,10 @@
 }
 
 .card__like-btn {
+  position: static;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .card__like-btn_active {

@@ -8,6 +8,7 @@ export default function Profile({
   onAddClick,
   handleEditProfileClick,
   onCardLike,
+  handleSignOutClick,
 }) {
   return (
     <section className="profile">

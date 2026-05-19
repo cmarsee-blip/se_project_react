@@ -60,7 +60,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
       onSubmit={handleSubmit}
       buttonText="Add garment"
     >
-      <label htmlFor="name" className="modal__label_name">
+      <label htmlFor="addItem-name" className="modal__label_name">
         Name{" "}
         <input
           name="name"
@@ -80,7 +80,7 @@ const AddItemModal = ({ isOpen, onAddItem, onClose }) => {
           {showErrors && errors.name ? errors.name : ""}
         </span>
       </label>
-      <label htmlFor="imageUrl" className="modal__label_image">
+      <label htmlFor="addItem-imageUrl" className="modal__label_image">
         Image{" "}
         <input
           name="imageUrl"

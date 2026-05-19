@@ -1,7 +1,10 @@
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
+  const currentUser = useContext(CurrentUserContext);
   const defaultValues = { name: "", avatarUrl: "" };
 
   const validators = {
@@ -54,7 +57,7 @@ const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
       onSubmit={handleSubmit}
       buttonText="Save changes"
     >
-      <label htmlFor="name" className="modal__label_name">
+      <label htmlFor="editProfile-name" className="modal__label_name">
         Name{" "}
         <input
           name="name"
@@ -74,15 +77,15 @@ const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
           {showErrors && errors.name ? errors.name : ""}
         </span>
       </label>
-      <label htmlFor="avatarUrl" className="modal__label_image">
+      <label htmlFor="editProfile-avatarUrl" className="modal__label_image">
         Avatar{" "}
         <input
-          name="avatarUrl"
+          name="editProfile-avatarUrl"
           className={
             "modal__input" +
             (showErrors && errors.avatarUrl ? " modal__input_invalid" : "")
           }
-          id="avatarUrl"
+          id="editProfile-avatarUrl"
           placeholder="Avatar URL"
           value={values.avatarUrl}
           onChange={handleChange}

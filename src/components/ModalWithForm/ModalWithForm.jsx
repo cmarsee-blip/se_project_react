@@ -11,6 +11,7 @@ function ModalWithForm({
   onSubmit,
   isSubmitDisabled = false,
   altButtonText,
+  altButtonHandler,
 }) {
   return (
     <div
@@ -37,7 +38,11 @@ function ModalWithForm({
             {buttonText}
           </button>
           {altButtonText ? (
-            <button type="button" className="modal__submit-next">
+            <button
+              type="button"
+              className="modal__submit-next"
+              onClick={altButtonHandler}
+            >
               {altButtonText}
             </button>
           ) : null}

@@ -1,7 +1,7 @@
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const LoginModal = ({ isOpen, onClose, onLoginUser }) => {
+const LoginModal = ({ isOpen, onClose, onLoginUser, handleSignUpClick }) => {
   const defaultValues = { email: "", password: "" };
 
   const { values, handleChange, resetForm } =
@@ -13,6 +13,10 @@ const LoginModal = ({ isOpen, onClose, onLoginUser }) => {
     resetForm(defaultValues, {}, false);
   }
 
+  // function handleRegister() {
+
+  // }
+
   return (
     <ModalWithForm
       title="Log in"
@@ -21,9 +25,11 @@ const LoginModal = ({ isOpen, onClose, onLoginUser }) => {
       onClose={onClose}
       onSubmit={handleSubmit}
       buttonText="Log in"
+      // onAltButtonClick={onRegisterUser}
       altButtonText="or Register"
+      altButtonHandler={handleSignUpClick}
     >
-      <label htmlFor="email" className="modal__label_email">
+      <label htmlFor="login-email" className="modal__label_email">
         Email{" "}
         <input
           name="email"
@@ -36,7 +42,7 @@ const LoginModal = ({ isOpen, onClose, onLoginUser }) => {
           required
         />
       </label>
-      <label htmlFor="password" className="modal__label_password">
+      <label htmlFor="login-password" className="modal__label_password">
         Password{" "}
         <input
           name="password"

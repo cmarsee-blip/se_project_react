@@ -72,6 +72,9 @@ function App() {
   const handleSignOutClick = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("jwt");
+    setCurrentUser(null);
+    setIsSignedOut(true);
+    // navigate("/");
     closeActiveModal();
   };
 
@@ -135,14 +138,6 @@ function App() {
     }
   };
 
-  const handleSignOut = async (userData) => {
-    localStorage.removeItem("jwt");
-    setCurrentUser(null);
-    setIsLoggedIn(false);
-    setIsSignedOut(true);
-    navigate("/");
-  };
-
   const onEditProfile = (userData) => {
     updateProfile(userData).then((updatedUser) => {
       setCurrentUser(updatedUser);
@@ -199,7 +194,7 @@ function App() {
       : unlikeItem(id, token)
           .then((updatedCard) => {
             setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item)),
+              cards.map((item) => (item._id === id ? updatedCard.data : item)),
             );
           })
           .catch((err) => console.log(err));
@@ -383,6 +378,7 @@ function App() {
                     clothingItems={clothingItems}
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
                   />
                 }
               />
@@ -393,11 +389,13 @@ function App() {
             isOpen={activeModal === "login-user"}
             onClose={closeActiveModal}
             onLoginUser={handleLogin}
+            handleSignUpClick={handleSignUpClick}
           ></LoginModal>
           <RegisterModal
             isOpen={activeModal === "register-user"}
             onClose={closeActiveModal}
             onRegisterUser={handleRegistration}
+            handleLogInClick={handleLogInClick}
           ></RegisterModal>
           <AddItemModal
             isOpen={activeModal === "add-garment"}

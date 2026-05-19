@@ -2,7 +2,12 @@ import { useState } from "react";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
+const RegisterModal = ({
+  isOpen,
+  onClose,
+  onRegisterUser,
+  handleLogInClick,
+}) => {
   const defaultValues = { email: "", password: "", name: "", avatar: "" };
 
   const { values, handleChange, resetForm } =
@@ -24,8 +29,9 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
       onSubmit={handleSubmit}
       buttonText="Next"
       altButtonText="or Log in"
+      altButtonHandler={handleLogInClick}
     >
-      <label htmlFor="email" className="modal__label_email">
+      <label htmlFor="register-email" className="modal__label_email">
         Email{" "}
         <input
           name="email"
@@ -37,7 +43,7 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
           className={"modal__input"}
         />
       </label>
-      <label htmlFor="password" className="modal__label_password">
+      <label htmlFor="register-password" className="modal__label_password">
         Password{" "}
         <input
           name="password"
@@ -50,7 +56,7 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
         />
       </label>
       <label
-        htmlFor="name"
+        htmlFor="register-name"
         className="modal__label_name modal__label_name-sign-up"
       >
         Name{" "}
@@ -64,7 +70,7 @@ const RegisterModal = ({ isOpen, onClose, onRegisterUser }) => {
           className={"modal__input"}
         />
       </label>
-      <label htmlFor="avatar" className="modal__label_avatar">
+      <label htmlFor="register-avatar" className="modal__label_avatar">
         Avatar{" "}
         <input
           name="avatar"
