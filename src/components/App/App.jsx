@@ -121,18 +121,10 @@ function App() {
   const handleRegistration = async (userData) => {
     try {
       await signUp(userData);
-
-      setIsRegisterModalOpen(false);
-
-      const loginResponse = await handleLogin({
+      await handleLogin({
         email: userData.email,
         password: userData.password,
       });
-
-      localStorage.setItem("jwt", loginResponse.token);
-      setCurrentUser(loginResponse.user);
-      setIsLoggedIn(true);
-      setIsRegisterModalOpen(false);
     } catch (error) {
       console.error("Registration failed:", error);
     }
