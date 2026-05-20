@@ -39,8 +39,22 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card__like-btn_active {
+/* size the SVG icon to match the original assets */
+.card__like-icon {
+  width: 20px;
+  height: 18px;
+  display: block;
 }
-/* finish styling preview */
+
+/* optional active state styling if you want circle/bg around the icon */
+.card__like-btn_active {
+  /* example: keep icon as provided by SVG, add subtle bg */
+  background: rgba(255, 77, 79, 0.08);
+  border-radius: 50%;
+}

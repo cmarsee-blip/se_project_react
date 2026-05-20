@@ -1,6 +1,8 @@
 import "./ItemCard.css";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import statenotliked from "../../assets/statenotliked.svg";
+import stateliked from "../../assets/stateliked.svg";
 // import close from "../../assets/modalclose.png";
 
 function ItemCard({ item, onCardClick, onCardLike }) {
@@ -27,7 +29,11 @@ function ItemCard({ item, onCardClick, onCardLike }) {
             aria-label={isLiked ? "Unlike" : "Like"}
             title={isLiked ? "Unlike" : "Like"}
           >
-            ❤️
+            <img
+              src={isLiked ? stateliked : statenotliked}
+              alt={isLiked ? "liked" : "not liked"}
+              className="card__like-icon"
+            />
           </button>
         )}
       </div>
