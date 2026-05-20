@@ -42,14 +42,14 @@ const EditProfileModal = ({ isOpen, onClose, onEditProfile }) => {
       resetForm(
         {
           name: currentUser.name || "",
-          avatarUrl: currentUser.avatarUrl || "",
+          avatarUrl: currentUser.avatar || "",
         },
         {},
         true,
       );
       setShowErrors(false);
     }
-  }, [isOpen, currentUser, resetForm, setShowErrors]);
+  }, [isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
