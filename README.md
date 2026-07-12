@@ -26,7 +26,7 @@ I built the front end using React with Vite as the build tool. The app fetches l
 
 ## 🖼️ Screenshots
 
-![WTWR front end screenshot](path/to/screenshot.png)
+![WTWR front end screenshot](WTWR.png)
 
 ## ⚙️ Running It Locally
 
