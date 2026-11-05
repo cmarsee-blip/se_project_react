@@ -2,7 +2,7 @@
 
 A React application that recommends what to wear based on real-time weather conditions at the user's location.
 
-🔗 **Live Demo:** _(not yet deployed — consider adding a hosting link here)_ &nbsp;|&nbsp; 🎥 **Demo Video:** https://www.loom.com/share/e35e5e90bb304e7ab9c6c277aa32c205
+🔗 **Live Demo:** _The original deployment ran on a free-tier cloud server that has since expired._ &nbsp;|&nbsp; 🎥 **Demo Video:** https://www.loom.com/share/e35e5e90bb304e7ab9c6c277aa32c205
 
 **Companion repo:** [WTWR — Back End](https://github.com/cmarsee-blip/se_project_express)
 
