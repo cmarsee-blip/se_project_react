@@ -2,7 +2,7 @@
 
 A React application that recommends what to wear based on real-time weather conditions at the user's location.
 
-🔗 **Live Demo:** *(not yet deployed — consider adding a hosting link here)* &nbsp;|&nbsp; 🎥 **Demo Video:** https://www.loom.com/share/e35e5e90bb304e7ab9c6c277aa32c205
+🔗 **Live Demo:** _(not yet deployed — consider adding a hosting link here)_ &nbsp;|&nbsp; 🎥 **Demo Video:** https://www.loom.com/share/e35e5e90bb304e7ab9c6c277aa32c205
 
 **Companion repo:** [WTWR — Back End](https://github.com/cmarsee-blip/se_project_express)
 
@@ -17,6 +17,7 @@ WTWR helps determine what type of clothing someone should wear based on the curr
 I built the front end using React with Vite as the build tool. The app fetches live weather data from OpenWeatherAPI, categorizes the current conditions (hot/warm/cold, etc.), and filters clothing item recommendations to match. It pairs with a companion Express/MongoDB backend (see linked repo) for user profiles and clothing item data.
 
 **Key features:**
+
 - Live weather lookup by location via OpenWeatherAPI
 - Weather-condition categorization logic
 - Clothing recommendations filtered to match current conditions
@@ -38,6 +39,7 @@ cd se_project_react
 npm install
 npm run dev
 ```
+
 You'll also need an OpenWeatherAPI key set in your environment for weather lookups to work.
 
 ## ✅ Results
@@ -47,5 +49,3 @@ The app successfully retrieves and displays weather-matched clothing recommendat
 ## 🚀 Future Improvements
 
 - Fix the missing live deployment using a host like Netlify or Vercel to achieve a shareable public demo link.
-- Fix [add a specific limitation you noticed] using [your planned approach] to achieve [the outcome].
-
