@@ -170,9 +170,16 @@ export const defaultClothingItems = [
   },
 ];
 
-export const coordinates = {
+const coordinates = {
   latitude: 39.299563,
   longitude: -85.222776,
 };
 
-export const apiKey = "f56a9bd409adf71f8f18894ae68e0812";
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.cmwtwr.largent.org"
+    : "http://localhost:3001";
+
+const apiKey = "f56a9bd409adf71f8f18894ae68e0812";
+
+export { coordinates, apiKey, baseUrl };
