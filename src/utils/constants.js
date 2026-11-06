@@ -180,6 +180,6 @@ const baseUrl =
     ? "https://api.cmwtwr.largent.org"
     : "http://localhost:3001";
 
-const apiKey = "f56a9bd409adf71f8f18894ae68e0812";
+const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
 
 export { coordinates, apiKey, baseUrl };
